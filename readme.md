@@ -3,7 +3,7 @@
 An automated tool for mapping and correlating cybersecurity frameworks including **MITRE ATT&CK**, **CAPEC**, **D3FEND**, and **STRIDE** threat modeling categories.
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/yourusername/cybersec-mapping/graphs/commit-activity)
 
 ## 🎯 Features
