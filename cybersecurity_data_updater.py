@@ -598,6 +598,27 @@ class CybersecurityDataUpdater:
                     font-size: 0.8em; 
                     font-weight: bold;
                 }}
+                .expand-button {{
+                    background: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 8px 16px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-size: 0.9em;
+                    margin-top: 10px;
+                    transition: all 0.3s ease;
+                }}
+                .expand-button:hover {{
+                    background: #0056b3;
+                    transform: translateY(-2px);
+                }}
+                .hidden-item {{
+                    display: none;
+                }}
+                .expanded {{
+                    transition: max-height 0.3s ease;
+                }}
                 .footer {{ 
                     background: rgba(255,255,255,0.95); 
                     padding: 20px; 
@@ -613,6 +634,28 @@ class CybersecurityDataUpdater:
                     .header h1 {{ font-size: 2em; }}
                 }}
             </style>
+            <script>
+                function toggleItems(category, type) {{
+                    const container = document.getElementById(category + '_' + type + '_container');
+                    const button = document.getElementById(category + '_' + type + '_btn');
+                    
+                    if (container.classList.contains('expanded')) {{
+                        // Réduire : masquer les éléments supplémentaires et réduire la hauteur
+                        container.classList.remove('expanded');
+                        container.style.maxHeight = '200px';
+                        const hiddenItems = container.querySelectorAll('.hidden-item');
+                        hiddenItems.forEach(item => item.style.display = 'none');
+                        button.textContent = button.textContent.replace('Masquer', 'Voir tous');
+                    }} else {{
+                        // Étendre : afficher tous les éléments et augmenter la hauteur
+                        container.classList.add('expanded');
+                        container.style.maxHeight = '400px';
+                        const hiddenItems = container.querySelectorAll('.hidden-item');
+                        hiddenItems.forEach(item => item.style.display = 'block');
+                        button.textContent = button.textContent.replace('Voir tous', 'Masquer');
+                    }}
+                }}
+            </script>
         </head>
         <body>
             <div class="container">
@@ -656,15 +699,32 @@ class CybersecurityDataUpdater:
         
         # Add STRIDE category grid
         html_template += """
-                <div class="section">
-                    <h2>🎯 STRIDE Threat Categories</h2>
-                    <div class="category-grid">
+        <div class="section">
+            <h2>🎯 STRIDE Threat Categories</h2>
+            <div class="category-grid">
         """
         
         # Add each STRIDE category as a card
         for category, data in mapping_data['stride_mapping'].items():
             capec_count = len(data['capec_patterns'])
             attack_count = len(data['attack_techniques'])
+            category_id = category.replace(' ', '_')
+            
+            # Build CAPEC patterns HTML (tous dans le même conteneur)
+            capec_all_html = ""
+            for i, p in enumerate(data['capec_patterns']):
+                css_class = 'capec-pattern' if i < 10 else 'capec-pattern hidden-item'
+                capec_all_html += f'<div class="{css_class}"><strong>{p["id"]}</strong>: {p["name"]}</div>'
+            
+            # Build ATT&CK techniques HTML (tous dans le même conteneur)
+            attack_all_html = ""
+            for i, t in enumerate(data['attack_techniques']):
+                css_class = 'technique' if i < 8 else 'technique hidden-item'
+                attack_all_html += f'<div class="{css_class}"><strong>{t["id"]}</strong>: {t["name"]} <em>({t["domain"]})</em></div>'
+            
+            # Build buttons separately
+            capec_button = f'<button id="{category_id}_capec_btn" class="expand-button" onclick="toggleItems(\'{category_id}\', \'capec\')">Voir tous ({capec_count - 10} restants)</button>' if capec_count > 10 else ''
+            attack_button = f'<button id="{category_id}_attack_btn" class="expand-button" onclick="toggleItems(\'{category_id}\', \'attack\')">Voir tous ({attack_count - 8} restants)</button>' if attack_count > 8 else ''
             
             html_template += f"""
                         <div class="category-card">
@@ -674,16 +734,16 @@ class CybersecurityDataUpdater:
                             </div>
                             
                             <h4>CAPEC Patterns <span class="count-badge">{capec_count}</span></h4>
-                            <div style="max-height: 200px; overflow-y: auto;">
-                                {"".join([f'<div class="capec-pattern"><strong>{p["id"]}</strong>: {p["name"]}</div>' for p in data['capec_patterns'][:10]])}
-                                {f'<p style="text-align: center; color: #666; margin-top: 10px;">... and {capec_count - 10} more patterns</p>' if capec_count > 10 else ''}
+                            <div id="{category_id}_capec_container" style="max-height: 200px; overflow-y: auto; transition: max-height 0.3s ease;">
+                                {capec_all_html}
                             </div>
+                            {capec_button}
                             
                             <h4 style="margin-top: 20px;">ATT&CK Techniques <span class="count-badge">{attack_count}</span></h4>
-                            <div style="max-height: 200px; overflow-y: auto;">
-                                {"".join([f'<div class="technique"><strong>{t["id"]}</strong>: {t["name"]} <em>({t["domain"]})</em></div>' for t in data['attack_techniques'][:8]])}
-                                {f'<p style="text-align: center; color: #666; margin-top: 10px;">... and {attack_count - 8} more techniques</p>' if attack_count > 8 else ''}
+                            <div id="{category_id}_attack_container" style="max-height: 200px; overflow-y: auto; transition: max-height 0.3s ease;">
+                                {attack_all_html}
                             </div>
+                            {attack_button}
                         </div>
             """
         

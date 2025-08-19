@@ -205,3 +205,15 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+monitor.sh
+requirements.txt
+run_update.sh
+validate_setup.py
+deploy_web.py
+cybersec_data/attack_enterprise_raw.json
+cybersec_data/attack_ics_raw.json
+cybersec_data/attack_mobile_raw.json
+cybersec_data/capec_raw.json
+cybersec_data/consolidated_mapping.json
+cybersec_data/cybersec_report.html
+cybersec_data/d3fend_raw.json
