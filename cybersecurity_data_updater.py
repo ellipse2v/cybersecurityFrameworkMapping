@@ -55,107 +55,128 @@ class CybersecurityDataUpdater:
             'Spoofing': {
                 'description': 'Identity falsification attacks',
                 'capec_ids': [
-                    # Content Spoofing
-                    'CAPEC-148', 'CAPEC-145', 'CAPEC-218', 'CAPEC-502', 'CAPEC-627', 'CAPEC-628',
-                    # Identity Spoofing
-                    'CAPEC-151', 'CAPEC-194', 'CAPEC-275', 'CAPEC-543', 'CAPEC-544', 'CAPEC-598', 'CAPEC-633',
-                    # Principal Spoof
-                    'CAPEC-195', 'CAPEC-587', 'CAPEC-599',
-                    # Signature Spoof
-                    'CAPEC-473', 'CAPEC-459', 'CAPEC-474', 'CAPEC-475', 'CAPEC-476', 'CAPEC-477', 
-                    'CAPEC-479', 'CAPEC-485',
-                    # Phishing
-                    'CAPEC-89', 'CAPEC-98', 'CAPEC-163', 'CAPEC-164', 'CAPEC-656',
-                    # Resource Location Spoofing
-                    'CAPEC-154', 'CAPEC-159', 'CAPEC-132', 'CAPEC-38', 'CAPEC-471', 'CAPEC-641',
-                    # Cache Poisoning
-                    'CAPEC-141', 'CAPEC-51', 'CAPEC-142',
-                    # Rogue Location
-                    'CAPEC-616', 'CAPEC-505', 'CAPEC-611', 'CAPEC-615', 'CAPEC-617', 'CAPEC-630',
-                    'CAPEC-631', 'CAPEC-632', 'CAPEC-667',
-                    # Action Spoofing
-                    'CAPEC-173', 'CAPEC-103', 'CAPEC-181', 'CAPEC-222', 'CAPEC-501', 'CAPEC-504',
-                    'CAPEC-654', 'CAPEC-506',
-                    # Human Behavior Manipulation
-                    'CAPEC-416', 'CAPEC-407', 'CAPEC-383', 'CAPEC-412', 'CAPEC-413', 'CAPEC-414',
-                    'CAPEC-415', 'CAPEC-417', 'CAPEC-418', 'CAPEC-420', 'CAPEC-421', 'CAPEC-422',
-                    'CAPEC-423', 'CAPEC-424', 'CAPEC-425', 'CAPEC-426', 'CAPEC-427', 'CAPEC-428',
-                    'CAPEC-429', 'CAPEC-433', 'CAPEC-434', 'CAPEC-435',
-                    # API Manipulation
-                    'CAPEC-389'
+                    'CAPEC-103', 'CAPEC-132', 'CAPEC-141', 'CAPEC-142', 'CAPEC-145', 'CAPEC-148',
+                    'CAPEC-151', 'CAPEC-154', 'CAPEC-159', 'CAPEC-163', 'CAPEC-164', 'CAPEC-173',
+                    'CAPEC-181', 'CAPEC-194', 'CAPEC-195', 'CAPEC-218', 'CAPEC-222', 'CAPEC-275',
+                    'CAPEC-38', 'CAPEC-383', 'CAPEC-389', 'CAPEC-407', 'CAPEC-412', 'CAPEC-413',
+                    'CAPEC-414', 'CAPEC-415', 'CAPEC-416', 'CAPEC-417', 'CAPEC-418', 'CAPEC-420',
+                    'CAPEC-421', 'CAPEC-422', 'CAPEC-423', 'CAPEC-424', 'CAPEC-425', 'CAPEC-426',
+                    'CAPEC-427', 'CAPEC-428', 'CAPEC-429', 'CAPEC-433', 'CAPEC-434', 'CAPEC-435',
+                    'CAPEC-459', 'CAPEC-471', 'CAPEC-473', 'CAPEC-474', 'CAPEC-475', 'CAPEC-476',
+                    'CAPEC-477', 'CAPEC-479', 'CAPEC-485', 'CAPEC-501', 'CAPEC-502', 'CAPEC-504',
+                    'CAPEC-505', 'CAPEC-506', 'CAPEC-51', 'CAPEC-543', 'CAPEC-544', 'CAPEC-587',
+                    'CAPEC-598', 'CAPEC-599', 'CAPEC-611', 'CAPEC-615', 'CAPEC-616', 'CAPEC-617',
+                    'CAPEC-627', 'CAPEC-628', 'CAPEC-630', 'CAPEC-631', 'CAPEC-632', 'CAPEC-633',
+                    'CAPEC-641', 'CAPEC-654', 'CAPEC-656', 'CAPEC-667', 'CAPEC-89', 'CAPEC-98'
                 ]
             },
             'Tampering': {
                 'description': 'Data or system integrity violations',
                 'capec_ids': [
-                    # Data Structure Manipulation
-                    'CAPEC-271', 'CAPEC-267', 'CAPEC-39', 'CAPEC-75', 'CAPEC-123', 'CAPEC-153',
-                    'CAPEC-272', 'CAPEC-273', 'CAPEC-74', 'CAPEC-221', 'CAPEC-459',
-                    # File System Attacks
-                    'CAPEC-132', 'CAPEC-29', 'CAPEC-653', 'CAPEC-635', 'CAPEC-649', 'CAPEC-471',
-                    'CAPEC-204', 'CAPEC-17',
-                    # Code Injection
-                    'CAPEC-242', 'CAPEC-23', 'CAPEC-250', 'CAPEC-77', 'CAPEC-245', 'CAPEC-83',
-                    'CAPEC-85', 'CAPEC-89', 'CAPEC-86', 'CAPEC-113', 'CAPEC-152', 'CAPEC-263',
-                    'CAPEC-81', 'CAPEC-78', 'CAPEC-146', 'CAPEC-248', 'CAPEC-13',
-                    # Hardware/Firmware
-                    'CAPEC-522', 'CAPEC-439', 'CAPEC-440', 'CAPEC-441', 'CAPEC-636', 'CAPEC-637',
-                    'CAPEC-638', 'CAPEC-562'
+                    'CAPEC-10', 'CAPEC-100', 'CAPEC-105', 'CAPEC-113', 'CAPEC-120', 'CAPEC-123',
+                    'CAPEC-124', 'CAPEC-126', 'CAPEC-128', 'CAPEC-129', 'CAPEC-133', 'CAPEC-139',
+                    'CAPEC-14', 'CAPEC-140', 'CAPEC-141', 'CAPEC-142', 'CAPEC-146', 'CAPEC-153',
+                    'CAPEC-160', 'CAPEC-161', 'CAPEC-165', 'CAPEC-166', 'CAPEC-168', 'CAPEC-176',
+                    'CAPEC-184', 'CAPEC-185', 'CAPEC-186', 'CAPEC-187', 'CAPEC-201', 'CAPEC-203',
+                    'CAPEC-206', 'CAPEC-220', 'CAPEC-221', 'CAPEC-24', 'CAPEC-256', 'CAPEC-26',
+                    'CAPEC-267', 'CAPEC-268', 'CAPEC-27', 'CAPEC-270', 'CAPEC-271', 'CAPEC-272',
+                    'CAPEC-273', 'CAPEC-274', 'CAPEC-276', 'CAPEC-277', 'CAPEC-278', 'CAPEC-279',
+                    'CAPEC-28', 'CAPEC-29', 'CAPEC-3', 'CAPEC-33', 'CAPEC-34', 'CAPEC-4', 'CAPEC-401',
+                    'CAPEC-402', 'CAPEC-42', 'CAPEC-43', 'CAPEC-438', 'CAPEC-439', 'CAPEC-44',
+                    'CAPEC-440', 'CAPEC-441', 'CAPEC-442', 'CAPEC-443', 'CAPEC-444', 'CAPEC-445',
+                    'CAPEC-446', 'CAPEC-447', 'CAPEC-448', 'CAPEC-45', 'CAPEC-452', 'CAPEC-456',
+                    'CAPEC-457', 'CAPEC-458', 'CAPEC-46', 'CAPEC-47', 'CAPEC-478', 'CAPEC-481',
+                    'CAPEC-5', 'CAPEC-51', 'CAPEC-511', 'CAPEC-516', 'CAPEC-517', 'CAPEC-518',
+                    'CAPEC-519', 'CAPEC-52', 'CAPEC-520', 'CAPEC-521', 'CAPEC-522', 'CAPEC-523',
+                    'CAPEC-524', 'CAPEC-53', 'CAPEC-530', 'CAPEC-531', 'CAPEC-532', 'CAPEC-533',
+                    'CAPEC-534', 'CAPEC-535', 'CAPEC-536', 'CAPEC-537', 'CAPEC-538', 'CAPEC-539',
+                    'CAPEC-540', 'CAPEC-548', 'CAPEC-571', 'CAPEC-572', 'CAPEC-578', 'CAPEC-594',
+                    'CAPEC-595', 'CAPEC-596', 'CAPEC-597', 'CAPEC-614', 'CAPEC-624', 'CAPEC-625',
+                    'CAPEC-635', 'CAPEC-636', 'CAPEC-638', 'CAPEC-64', 'CAPEC-649', 'CAPEC-655',
+                    'CAPEC-657', 'CAPEC-663', 'CAPEC-665', 'CAPEC-669', 'CAPEC-67', 'CAPEC-670',
+                    'CAPEC-671', 'CAPEC-672', 'CAPEC-673', 'CAPEC-674', 'CAPEC-677', 'CAPEC-678',
+                    'CAPEC-71', 'CAPEC-72', 'CAPEC-73', 'CAPEC-74', 'CAPEC-75', 'CAPEC-76', 'CAPEC-78',
+                    'CAPEC-79', 'CAPEC-8', 'CAPEC-80', 'CAPEC-81', 'CAPEC-9', 'CAPEC-90', 'CAPEC-92',
+                    'CAPEC-93'
                 ]
             },
             'Repudiation': {
                 'description': 'Denial of actions or hiding evidence',
                 'capec_ids': [
-                    # Log Manipulation
-                    'CAPEC-268', 'CAPEC-93',
-                    # Evidence Elimination
-                    'CAPEC-578', 'CAPEC-205', 'CAPEC-550', 'CAPEC-97',
-                    # Timestamp Manipulation
-                    'CAPEC-649', 'CAPEC-26'
+                    'CAPEC-195', 'CAPEC-268', 'CAPEC-571', 'CAPEC-587', 'CAPEC-599', 'CAPEC-67',
+                    'CAPEC-81', 'CAPEC-93'
                 ]
             },
             'Information Disclosure': {
                 'description': 'Unauthorized information access or leakage',
                 'capec_ids': [
-                    # Data Interception
-                    'CAPEC-117', 'CAPEC-157', 'CAPEC-158', 'CAPEC-609', 'CAPEC-610', 'CAPEC-612',
-                    'CAPEC-613', 'CAPEC-614', 'CAPEC-651',
-                    # Memory Attacks
-                    'CAPEC-124', 'CAPEC-134', 'CAPEC-233', 'CAPEC-116', 'CAPEC-37', 'CAPEC-203',
-                    # Side Channel Attacks
-                    'CAPEC-189', 'CAPEC-188',
-                    # Application Layer
-                    'CAPEC-208', 'CAPEC-224', 'CAPEC-95', 'CAPEC-118',
-                    # Credential Harvesting
-                    'CAPEC-509', 'CAPEC-560'
+                    'CAPEC-11', 'CAPEC-111', 'CAPEC-116', 'CAPEC-117', 'CAPEC-12', 'CAPEC-127',
+                    'CAPEC-129', 'CAPEC-143', 'CAPEC-144', 'CAPEC-149', 'CAPEC-150', 'CAPEC-155',
+                    'CAPEC-157', 'CAPEC-158', 'CAPEC-167', 'CAPEC-169', 'CAPEC-170', 'CAPEC-179',
+                    'CAPEC-188', 'CAPEC-189', 'CAPEC-190', 'CAPEC-191', 'CAPEC-192', 'CAPEC-204',
+                    'CAPEC-212', 'CAPEC-215', 'CAPEC-216', 'CAPEC-217', 'CAPEC-224', 'CAPEC-261',
+                    'CAPEC-285', 'CAPEC-287', 'CAPEC-290', 'CAPEC-291', 'CAPEC-292', 'CAPEC-293',
+                    'CAPEC-294', 'CAPEC-295', 'CAPEC-296', 'CAPEC-297', 'CAPEC-298', 'CAPEC-299',
+                    'CAPEC-300', 'CAPEC-301', 'CAPEC-302', 'CAPEC-303', 'CAPEC-304', 'CAPEC-305',
+                    'CAPEC-306', 'CAPEC-307', 'CAPEC-308', 'CAPEC-309', 'CAPEC-310', 'CAPEC-312',
+                    'CAPEC-313', 'CAPEC-317', 'CAPEC-318', 'CAPEC-319', 'CAPEC-320', 'CAPEC-321',
+                    'CAPEC-322', 'CAPEC-323', 'CAPEC-324', 'CAPEC-325', 'CAPEC-326', 'CAPEC-327',
+                    'CAPEC-328', 'CAPEC-329', 'CAPEC-330', 'CAPEC-331', 'CAPEC-332', 'CAPEC-37',
+                    'CAPEC-383', 'CAPEC-406', 'CAPEC-407', 'CAPEC-410', 'CAPEC-412', 'CAPEC-413',
+                    'CAPEC-414', 'CAPEC-415', 'CAPEC-462', 'CAPEC-463', 'CAPEC-464', 'CAPEC-465',
+                    'CAPEC-472', 'CAPEC-48', 'CAPEC-497', 'CAPEC-498', 'CAPEC-499', 'CAPEC-501',
+                    'CAPEC-508', 'CAPEC-529', 'CAPEC-54', 'CAPEC-541', 'CAPEC-545', 'CAPEC-546',
+                    'CAPEC-554', 'CAPEC-568', 'CAPEC-569', 'CAPEC-57', 'CAPEC-573', 'CAPEC-574',
+                    'CAPEC-575', 'CAPEC-576', 'CAPEC-577', 'CAPEC-580', 'CAPEC-581', 'CAPEC-606',
+                    'CAPEC-608', 'CAPEC-609', 'CAPEC-612', 'CAPEC-613', 'CAPEC-618', 'CAPEC-619',
+                    'CAPEC-620', 'CAPEC-621', 'CAPEC-622', 'CAPEC-623', 'CAPEC-634', 'CAPEC-637',
+                    'CAPEC-639', 'CAPEC-643', 'CAPEC-646', 'CAPEC-647', 'CAPEC-648', 'CAPEC-65',
+                    'CAPEC-651', 'CAPEC-675', 'CAPEC-85', 'CAPEC-95', 'CAPEC-97'
                 ]
             },
             'Denial of Service': {
                 'description': 'Service availability attacks',
                 'capec_ids': [
-                    # Resource Exhaustion
-                    'CAPEC-119', 'CAPEC-125', 'CAPEC-130', 'CAPEC-131', 'CAPEC-147', 'CAPEC-229',
-                    'CAPEC-230', 'CAPEC-231', 'CAPEC-482', 'CAPEC-486', 'CAPEC-487', 'CAPEC-488',
-                    'CAPEC-489', 'CAPEC-490', 'CAPEC-491', 'CAPEC-492', 'CAPEC-493', 'CAPEC-494',
-                    'CAPEC-495', 'CAPEC-496', 'CAPEC-497', 'CAPEC-498', 'CAPEC-499',
-                    # Network Layer DoS
-                    'CAPEC-21',
-                    # Physical DoS
-                    'CAPEC-599', 'CAPEC-600', 'CAPEC-601', 'CAPEC-602', 'CAPEC-603', 'CAPEC-604',
-                    'CAPEC-605', 'CAPEC-606', 'CAPEC-607', 'CAPEC-608'
+                    'CAPEC-125', 'CAPEC-130', 'CAPEC-131', 'CAPEC-147', 'CAPEC-197', 'CAPEC-2',
+                    'CAPEC-201', 'CAPEC-227', 'CAPEC-229', 'CAPEC-230', 'CAPEC-231', 'CAPEC-25',
+                    'CAPEC-469', 'CAPEC-482', 'CAPEC-486', 'CAPEC-487', 'CAPEC-488', 'CAPEC-489',
+                    'CAPEC-490', 'CAPEC-491', 'CAPEC-492', 'CAPEC-493', 'CAPEC-494', 'CAPEC-495',
+                    'CAPEC-496', 'CAPEC-528', 'CAPEC-547', 'CAPEC-559', 'CAPEC-582', 'CAPEC-583',
+                    'CAPEC-584', 'CAPEC-585', 'CAPEC-589', 'CAPEC-590', 'CAPEC-601', 'CAPEC-603',
+                    'CAPEC-604', 'CAPEC-605', 'CAPEC-607', 'CAPEC-666', 'CAPEC-96'
                 ]
             },
             'Elevation of Privilege': {
                 'description': 'Unauthorized access escalation',
                 'capec_ids': [
-                    # Access Control Bypass
-                    'CAPEC-122', 'CAPEC-58', 'CAPEC-180', 'CAPEC-207',
-                    # Authentication Bypass
-                    'CAPEC-36', 'CAPEC-560', 'CAPEC-16', 'CAPEC-554', 'CAPEC-593',
-                    # Privilege Escalation
-                    'CAPEC-233', 'CAPEC-69', 'CAPEC-40', 'CAPEC-104',
-                    # Session Management
-                    'CAPEC-21', 'CAPEC-102'
+                    'CAPEC-1', 'CAPEC-101', 'CAPEC-102', 'CAPEC-104', 'CAPEC-107', 'CAPEC-108',
+                    'CAPEC-109', 'CAPEC-110', 'CAPEC-112', 'CAPEC-114', 'CAPEC-115', 'CAPEC-121',
+                    'CAPEC-122', 'CAPEC-13', 'CAPEC-134', 'CAPEC-135', 'CAPEC-136', 'CAPEC-137',
+                    'CAPEC-138', 'CAPEC-15', 'CAPEC-16', 'CAPEC-162', 'CAPEC-17', 'CAPEC-174',
+                    'CAPEC-175', 'CAPEC-177', 'CAPEC-178', 'CAPEC-18', 'CAPEC-180', 'CAPEC-182',
+                    'CAPEC-183', 'CAPEC-19', 'CAPEC-193', 'CAPEC-196', 'CAPEC-198', 'CAPEC-199',
+                    'CAPEC-20', 'CAPEC-200', 'CAPEC-202', 'CAPEC-207', 'CAPEC-208', 'CAPEC-209',
+                    'CAPEC-21', 'CAPEC-219', 'CAPEC-22', 'CAPEC-221', 'CAPEC-226', 'CAPEC-228',
+                    'CAPEC-23', 'CAPEC-233', 'CAPEC-234', 'CAPEC-237', 'CAPEC-240', 'CAPEC-242',
+                    'CAPEC-243', 'CAPEC-244', 'CAPEC-245', 'CAPEC-247', 'CAPEC-248', 'CAPEC-250',
+                    'CAPEC-251', 'CAPEC-252', 'CAPEC-253', 'CAPEC-263', 'CAPEC-30', 'CAPEC-31',
+                    'CAPEC-32', 'CAPEC-35', 'CAPEC-36', 'CAPEC-384', 'CAPEC-385', 'CAPEC-386',
+                    'CAPEC-387', 'CAPEC-388', 'CAPEC-389', 'CAPEC-39', 'CAPEC-390', 'CAPEC-391',
+                    'CAPEC-392', 'CAPEC-393', 'CAPEC-394', 'CAPEC-395', 'CAPEC-397', 'CAPEC-398',
+                    'CAPEC-399', 'CAPEC-40', 'CAPEC-400', 'CAPEC-41', 'CAPEC-44', 'CAPEC-460',
+                    'CAPEC-461', 'CAPEC-466', 'CAPEC-467', 'CAPEC-468', 'CAPEC-470', 'CAPEC-480',
+                    'CAPEC-49', 'CAPEC-5', 'CAPEC-50', 'CAPEC-500', 'CAPEC-503', 'CAPEC-507',
+                    'CAPEC-509', 'CAPEC-510', 'CAPEC-542', 'CAPEC-549', 'CAPEC-55', 'CAPEC-550',
+                    'CAPEC-551', 'CAPEC-552', 'CAPEC-555', 'CAPEC-556', 'CAPEC-558', 'CAPEC-560',
+                    'CAPEC-561', 'CAPEC-562', 'CAPEC-563', 'CAPEC-564', 'CAPEC-565', 'CAPEC-579',
+                    'CAPEC-58', 'CAPEC-586', 'CAPEC-588', 'CAPEC-59', 'CAPEC-591', 'CAPEC-592',
+                    'CAPEC-593', 'CAPEC-6', 'CAPEC-60', 'CAPEC-600', 'CAPEC-61', 'CAPEC-610',
+                    'CAPEC-62', 'CAPEC-626', 'CAPEC-629', 'CAPEC-63', 'CAPEC-640', 'CAPEC-642',
+                    'CAPEC-644', 'CAPEC-645', 'CAPEC-650', 'CAPEC-652', 'CAPEC-653', 'CAPEC-66',
+                    'CAPEC-660', 'CAPEC-661', 'CAPEC-662', 'CAPEC-664', 'CAPEC-668', 'CAPEC-676',
+                    'CAPEC-679', 'CAPEC-68', 'CAPEC-680', 'CAPEC-681', 'CAPEC-69', 'CAPEC-7',
+                    'CAPEC-70', 'CAPEC-77', 'CAPEC-83', 'CAPEC-84', 'CAPEC-86', 'CAPEC-87',
+                    'CAPEC-88', 'CAPEC-90', 'CAPEC-94'
                 ]
             }
         }
