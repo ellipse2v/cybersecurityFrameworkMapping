@@ -49,7 +49,7 @@ class CybersecurityDataUpdater:
             'd3fend_base': 'https://d3fend.mitre.org/api/ontology/inference/d3fend-full-mappings.json'
         }
         
-        # Official STRIDE to CAPEC mappings based on community research
+        # Official STRIDE to CAPEC mappings based on community research 
         # Source: https://ostering.com/blog/2022/03/07/capec-stride-mapping/
         self.stride_capec_mappings = {
             'Spoofing': {
@@ -93,7 +93,7 @@ class CybersecurityDataUpdater:
                     'CAPEC-272', 'CAPEC-273', 'CAPEC-74', 'CAPEC-221', 'CAPEC-459',
                     # File System Attacks
                     'CAPEC-132', 'CAPEC-29', 'CAPEC-653', 'CAPEC-635', 'CAPEC-649', 'CAPEC-471',
-                    'CAPEC-204', 'CAPEC-17', 'CAPEC-649',
+                    'CAPEC-204', 'CAPEC-17',
                     # Code Injection
                     'CAPEC-242', 'CAPEC-23', 'CAPEC-250', 'CAPEC-77', 'CAPEC-245', 'CAPEC-83',
                     'CAPEC-85', 'CAPEC-89', 'CAPEC-86', 'CAPEC-113', 'CAPEC-152', 'CAPEC-263',
@@ -107,7 +107,7 @@ class CybersecurityDataUpdater:
                 'description': 'Denial of actions or hiding evidence',
                 'capec_ids': [
                     # Log Manipulation
-                    'CAPEC-268', 'CAPEC-93', 'CAPEC-93', 'CAPEC-268',
+                    'CAPEC-268', 'CAPEC-93',
                     # Evidence Elimination
                     'CAPEC-578', 'CAPEC-205', 'CAPEC-550', 'CAPEC-97',
                     # Timestamp Manipulation
@@ -119,16 +119,15 @@ class CybersecurityDataUpdater:
                 'capec_ids': [
                     # Data Interception
                     'CAPEC-117', 'CAPEC-157', 'CAPEC-158', 'CAPEC-609', 'CAPEC-610', 'CAPEC-612',
-                    'CAPEC-613', 'CAPEC-614', 'CAPEC-651', 'CAPEC-651',
+                    'CAPEC-613', 'CAPEC-614', 'CAPEC-651',
                     # Memory Attacks
                     'CAPEC-124', 'CAPEC-134', 'CAPEC-233', 'CAPEC-116', 'CAPEC-37', 'CAPEC-203',
                     # Side Channel Attacks
-                    'CAPEC-189', 'CAPEC-188', 'CAPEC-651', 'CAPEC-189',
+                    'CAPEC-189', 'CAPEC-188',
                     # Application Layer
-                    'CAPEC-208', 'CAPEC-224', 'CAPEC-95', 'CAPEC-116', 'CAPEC-37', 'CAPEC-118',
-                    'CAPEC-224', 'CAPEC-116', 'CAPEC-95',
+                    'CAPEC-208', 'CAPEC-224', 'CAPEC-95', 'CAPEC-118',
                     # Credential Harvesting
-                    'CAPEC-509', 'CAPEC-560', 'CAPEC-560', 'CAPEC-509'
+                    'CAPEC-509', 'CAPEC-560'
                 ]
             },
             'Denial of Service': {
@@ -140,11 +139,7 @@ class CybersecurityDataUpdater:
                     'CAPEC-489', 'CAPEC-490', 'CAPEC-491', 'CAPEC-492', 'CAPEC-493', 'CAPEC-494',
                     'CAPEC-495', 'CAPEC-496', 'CAPEC-497', 'CAPEC-498', 'CAPEC-499',
                     # Network Layer DoS
-                    'CAPEC-21', 'CAPEC-482', 'CAPEC-486', 'CAPEC-487', 'CAPEC-488', 'CAPEC-489',
-                    'CAPEC-490', 'CAPEC-491', 'CAPEC-492', 'CAPEC-493', 'CAPEC-494', 'CAPEC-495',
-                    'CAPEC-496', 'CAPEC-497', 'CAPEC-498', 'CAPEC-499',
-                    # Application Layer DoS
-                    'CAPEC-147', 'CAPEC-229', 'CAPEC-230', 'CAPEC-231',
+                    'CAPEC-21',
                     # Physical DoS
                     'CAPEC-599', 'CAPEC-600', 'CAPEC-601', 'CAPEC-602', 'CAPEC-603', 'CAPEC-604',
                     'CAPEC-605', 'CAPEC-606', 'CAPEC-607', 'CAPEC-608'
@@ -154,15 +149,13 @@ class CybersecurityDataUpdater:
                 'description': 'Unauthorized access escalation',
                 'capec_ids': [
                     # Access Control Bypass
-                    'CAPEC-122', 'CAPEC-58', 'CAPEC-180', 'CAPEC-21', 'CAPEC-122', 'CAPEC-207',
-                    'CAPEC-122', 'CAPEC-207',
+                    'CAPEC-122', 'CAPEC-58', 'CAPEC-180', 'CAPEC-207',
                     # Authentication Bypass
-                    'CAPEC-36', 'CAPEC-36', 'CAPEC-560', 'CAPEC-16', 'CAPEC-554', 'CAPEC-593',
+                    'CAPEC-36', 'CAPEC-560', 'CAPEC-16', 'CAPEC-554', 'CAPEC-593',
                     # Privilege Escalation
-                    'CAPEC-233', 'CAPEC-69', 'CAPEC-40', 'CAPEC-104', 'CAPEC-233', 'CAPEC-69',
-                    'CAPEC-40', 'CAPEC-104',
+                    'CAPEC-233', 'CAPEC-69', 'CAPEC-40', 'CAPEC-104',
                     # Session Management
-                    'CAPEC-21', 'CAPEC-21', 'CAPEC-102', 'CAPEC-102'
+                    'CAPEC-21', 'CAPEC-102'
                 ]
             }
         }
@@ -176,6 +169,7 @@ class CybersecurityDataUpdater:
             'D': 'Denial of Service',
             'E': 'Elevation of Privilege'
         }
+
         
     def ensure_output_dir(self):
         """Create output directory if it doesn't exist"""
@@ -349,7 +343,7 @@ class CybersecurityDataUpdater:
     def create_stride_mapping_with_real_data(self, techniques: List[Dict], 
                                            patterns: List[Dict]) -> Dict[str, Any]:
         """
-        Create STRIDE mapping using official CAPEC mappings and real data
+        Create STRIDE mapping using official CAPEC mappings and real data 
         """
         logging.info("Creating STRIDE mapping with official data...")
         
@@ -367,10 +361,12 @@ class CybersecurityDataUpdater:
                 'mapping_source': 'Official community mapping (ostering.com)'
             }
             
-            # Map CAPEC patterns using official mappings
+            # Map CAPEC patterns using official mappings 
             found_capec_ids = set()
-            for capec_id in mapping_info['capec_ids']:
-                if capec_id in capec_by_id:
+            unique_capec_ids = list(dict.fromkeys(mapping_info['capec_ids']))  
+            
+            for capec_id in unique_capec_ids:
+                if capec_id in capec_by_id and capec_id not in found_capec_ids:
                     pattern = capec_by_id[capec_id]
                     stride_mapping[category]['capec_patterns'].append({
                         'id': pattern['id'],
@@ -392,15 +388,19 @@ class CybersecurityDataUpdater:
             }
             
             keywords = stride_keywords.get(category, [])
+            unique_attack_techniques = {}  
+            
             for tech in techniques:
                 desc_lower = (tech.get('description', '') + ' ' + tech.get('name', '')).lower()
-                if any(keyword in desc_lower for keyword in keywords):
-                    stride_mapping[category]['attack_techniques'].append({
+                if any(keyword in desc_lower for keyword in keywords) and tech['id'] not in unique_attack_techniques:
+                    unique_attack_techniques[tech['id']] = {
                         'id': tech['id'],
                         'name': tech['name'],
                         'domain': tech['domain'],
                         'tactics': tech.get('tactics', [])
-                    })
+                    }
+            
+            stride_mapping[category]['attack_techniques'] = list(unique_attack_techniques.values())
         
         return stride_mapping
     
