@@ -21,6 +21,7 @@ An automated tool for mapping and correlating cybersecurity frameworks including
 |-----------|--------|------------------|
 | **MITRE ATT&CK** | [Official STIX Repository](https://github.com/mitre-attack/attack-stix-data) | Daily |
 | **CAPEC** | [MITRE CTI Repository](https://github.com/mitre/cti) | Daily |
+| **CAPEC-ATT&CK Mapping** | [Official CSV Mapping](https://capec.mitre.org/data/csv/658.csv.zip) | Daily |
 | **D3FEND** | [Official API](https://d3fend.mitre.org/api/) | When available |
 | **STRIDE-CAPEC Mappings** | [Community Research](https://ostering.com/blog/2022/03/07/capec-stride-mapping/) | Static (validated) |
 
@@ -137,11 +138,12 @@ cybersec_data/
 ```json
 {
   "metadata": {
-    "generated_at": "2025-08-18T10:30:00Z",
-    "version": "2.0",
+    "generated_at": "2025-08-20T12:15:00Z",
+    "version": "2.1",
     "data_sources": {
-      "attack_techniques_count": 800,
-      "capec_patterns_count": 600,
+      "attack_techniques_count": 1106,
+      "capec_patterns_count": 615,
+      "capec_attack_mappings_count": 177,
       "stride_categories": 6
     }
   },
@@ -360,4 +362,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Last Updated**: August 18, 2025 | **Version**: 2.0 | **Maintainer**: ellipse2v
+**Last Updated**: August 20, 2025 | **Version**: 2.1 | **Maintainer**: ellipse2v
