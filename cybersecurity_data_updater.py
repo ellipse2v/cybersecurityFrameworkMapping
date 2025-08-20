@@ -20,6 +20,9 @@ import os
 import logging
 from typing import Dict, List, Any, Set
 import time
+import zipfile
+import csv
+import io
 
 # Configure logging
 logging.basicConfig(
@@ -46,7 +49,8 @@ class CybersecurityDataUpdater:
             'attack_mobile': 'https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/mobile-attack/mobile-attack.json',
             'attack_ics': 'https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/ics-attack/ics-attack.json',
             'capec_stix': 'https://raw.githubusercontent.com/mitre/cti/master/capec/2.1/stix-capec.json',
-            'd3fend_base': 'https://d3fend.mitre.org/api/ontology/inference/d3fend-full-mappings.json'
+            'd3fend_base': 'https://d3fend.mitre.org/api/ontology/inference/d3fend-full-mappings.json',
+            'capec_attack_mapping_zip': 'https://capec.mitre.org/data/csv/658.csv.zip'
         }
         
         # Official STRIDE to CAPEC mappings based on community research 
@@ -224,7 +228,7 @@ class CybersecurityDataUpdater:
         
         attack_data = {}
         for domain, url in self.sources.items():
-            if 'attack' in domain:
+            if domain.startswith('attack_'):
                 try:
                     data = self.download_with_retry(url)
                     attack_data[domain] = data
@@ -282,6 +286,58 @@ class CybersecurityDataUpdater:
         except Exception as e:
             logging.warning(f"D3FEND not available via API: {e}")
             return {}
+
+    def fetch_capec_attack_mapping(self) -> Dict[str, List[str]]:
+        """
+        Fetch CAPEC to ATT&CK mapping from the official CSV file.
+        """
+        logging.info("Fetching CAPEC to ATT&CK mapping...")
+        url = self.sources['capec_attack_mapping_zip']
+        mapping = {}
+
+        try:
+            logging.info(f"Downloading: {url}")
+            response = requests.get(url, timeout=30)
+            response.raise_for_status()
+
+            with zipfile.ZipFile(io.BytesIO(response.content)) as z:
+                # Assuming there's only one CSV file in the zip, named '658.csv'
+                csv_filename = '658.csv'
+                with z.open(csv_filename) as csvfile:
+                    content = io.TextIOWrapper(csvfile, 'utf-8-sig').read()
+                    lines = content.splitlines()
+                    header = lines[0].replace("'", "")
+                    lines[0] = header
+
+                    reader = csv.DictReader(lines)
+                    for row in reader:
+                        capec_id = "CAPEC-" + row["ID"]
+                        taxonomy_mappings = row.get('Taxonomy Mappings', '')
+                        attack_ids = []
+                        if taxonomy_mappings:
+                            parts = taxonomy_mappings.split('::')
+                            for part in parts:
+                                if 'TAXONOMY NAME:ATTACK' in part:
+                                    sub_parts = part.split(':')
+                                    try:
+                                        entry_id_index = sub_parts.index('ENTRY ID')
+                                        attack_id_num = sub_parts[entry_id_index + 1]
+                                        if attack_id_num:
+                                            attack_ids.append(f"T{attack_id_num}")
+                                    except (ValueError, IndexError):
+                                        continue
+                        if attack_ids:
+                            mapping.setdefault(capec_id, []).extend(list(dict.fromkeys(attack_ids)))
+
+            logging.info(f"Successfully parsed CAPEC to ATT&CK mapping. Found {len(mapping)} mappings.")
+            return mapping
+
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Failed to download CAPEC-ATT&CK mapping: {e}")
+            raise
+        except Exception as e:
+            logging.error(f"Failed to parse CAPEC-ATT&CK mapping: {e}")
+            raise
     
     def parse_attack_techniques(self, attack_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
@@ -362,7 +418,8 @@ class CybersecurityDataUpdater:
         return patterns
     
     def create_stride_mapping_with_real_data(self, techniques: List[Dict], 
-                                           patterns: List[Dict]) -> Dict[str, Any]:
+                                           patterns: List[Dict],
+                                           capec_attack_mapping: Dict[str, List[str]]) -> Dict[str, Any]:
         """
         Create STRIDE mapping using official CAPEC mappings and real data 
         """
@@ -370,6 +427,7 @@ class CybersecurityDataUpdater:
         
         # Create index of CAPEC patterns by ID for quick lookup
         capec_by_id = {pattern['id']: pattern for pattern in patterns if pattern['id']}
+        attack_tech_by_id = {tech['id']: tech for tech in techniques}
         
         stride_mapping = {}
         
@@ -379,7 +437,7 @@ class CybersecurityDataUpdater:
                 'capec_patterns': [],
                 'capec_count': 0,
                 'attack_techniques': [],
-                'mapping_source': 'Official community mapping (ostering.com)'
+                'mapping_source': 'Official community mapping (ostering.com) and CAPEC-ATT&CK mapping'
             }
             
             # Map CAPEC patterns using official mappings 
@@ -398,28 +456,23 @@ class CybersecurityDataUpdater:
             
             stride_mapping[category]['capec_count'] = len(stride_mapping[category]['capec_patterns'])
             
-            # Map ATT&CK techniques by analyzing descriptions for STRIDE-related keywords
-            stride_keywords = {
-                'Spoofing': ['spoof', 'fake', 'impersonat', 'masquerad', 'phish', 'identity', 'forge'],
-                'Tampering': ['tamper', 'modify', 'alter', 'corrupt', 'manipulat', 'inject', 'poison'],
-                'Repudiation': ['log', 'audit', 'trace', 'evidence', 'timestamp', 'non-repudiation', 'cover'],
-                'Information Disclosure': ['disclosure', 'leak', 'exfiltrat', 'credential', 'sensitive', 'data', 'harvest'],
-                'Denial of Service': ['denial', 'flood', 'exhaust', 'resource', 'availability', 'crash', 'overwhelm'],
-                'Elevation of Privilege': ['privilege', 'escalat', 'admin', 'root', 'elevat', 'bypass', 'unauthorized']
-            }
+            # Map ATT&CK techniques using the direct CAPEC-to-ATT&CK mapping
+            unique_attack_techniques = {}
             
-            keywords = stride_keywords.get(category, [])
-            unique_attack_techniques = {}  
+            capec_ids_for_stride = {p['id'] for p in stride_mapping[category]['capec_patterns']}
             
-            for tech in techniques:
-                desc_lower = (tech.get('description', '') + ' ' + tech.get('name', '')).lower()
-                if any(keyword in desc_lower for keyword in keywords) and tech['id'] not in unique_attack_techniques:
-                    unique_attack_techniques[tech['id']] = {
-                        'id': tech['id'],
-                        'name': tech['name'],
-                        'domain': tech['domain'],
-                        'tactics': tech.get('tactics', [])
-                    }
+            for capec_id in capec_ids_for_stride:
+                if capec_id in capec_attack_mapping:
+                    attack_ids = capec_attack_mapping[capec_id]
+                    for attack_id in attack_ids:
+                        if attack_id in attack_tech_by_id and attack_id not in unique_attack_techniques:
+                            tech = attack_tech_by_id[attack_id]
+                            unique_attack_techniques[attack_id] = {
+                                'id': tech['id'],
+                                'name': tech['name'],
+                                'domain': tech['domain'],
+                                'tactics': tech.get('tactics', [])
+                            }
             
             stride_mapping[category]['attack_techniques'] = list(unique_attack_techniques.values())
         
@@ -435,6 +488,7 @@ class CybersecurityDataUpdater:
         attack_data = self.fetch_attack_data()
         capec_data = self.fetch_capec_data()
         d3fend_data = self.fetch_d3fend_data()
+        capec_attack_mapping = self.fetch_capec_attack_mapping()
         
         # Parse data
         techniques = self.parse_attack_techniques(attack_data)
@@ -442,18 +496,19 @@ class CybersecurityDataUpdater:
         capec_patterns = self.parse_capec_patterns(capec_data)
         
         # Create mappings with real data
-        stride_mapping = self.create_stride_mapping_with_real_data(techniques, capec_patterns)
+        stride_mapping = self.create_stride_mapping_with_real_data(techniques, capec_patterns, capec_attack_mapping)
         
         # Consolidated mapping
         consolidated = {
             'metadata': {
                 'generated_at': datetime.now().isoformat(),
-                'version': '2.0',
-                'mapping_source': 'Official STRIDE-CAPEC mappings from community research',
+                'version': '2.1',
+                'mapping_source': 'Official STRIDE-CAPEC and CAPEC-ATT&CK mappings',
                 'data_sources': {
                     'attack_techniques_count': len(techniques),
                     'attack_mitigations_count': len(mitigations),
                     'capec_patterns_count': len(capec_patterns),
+                    'capec_attack_mappings_count': len(capec_attack_mapping),
                     'd3fend_available': bool(d3fend_data),
                     'stride_categories': len(self.stride_capec_mappings)
                 }
